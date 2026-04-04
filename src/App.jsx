@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+// axios is no longer needed since we are using local data
 import Hero from './components/Hero.jsx'
 import Projects from './components/Projects.jsx'
 import Experience from './components/Experience.jsx'
@@ -17,16 +17,42 @@ const THEMES = {
   violet:  { primary: '#8b5cf6', bg: '#100015', selection: '#8b5cf6' },
 };
 
+// 2. Your Profile Data (Previously from the Backend)
+const profileData = {
+    projects: [
+        {
+            id: 1,
+            title: "Sign Language Recognition",
+            tech: ["Python", "MediaPipe", "OpenCV"],
+            description: "Real-time AI gesture recognition."
+        },
+        {
+            id: 2,
+            title: "Drowsiness Detection",
+            tech: ["Python", "Computer Vision"],
+            description: "AI-based driver safety system."
+        }
+    ],
+    education: [
+        {
+            institution: "Engineering College",
+            degree: "B.E. in AI & Data Science",
+            year: "2022 - 2026"
+        }
+    ],
+    socials: {
+        linkedin: "https://www.linkedin.com/in/aditya-goud-1a1444277/",
+        github: "https://github.com/Aditygoud"
+    }
+};
+
 function App() {
   const [data, setData] = useState(null);
-  
-  // 2. Initialize Theme State
   const [currentTheme, setCurrentTheme] = useState('default');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/profile')
-      .then(response => setData(response.data))
-      .catch(error => console.error("Error:", error));
+    // Directly set the data from our local object
+    setData(profileData);
   }, []);
 
   if (!data) return (
@@ -37,18 +63,16 @@ function App() {
     </div>
   );
 
-  // Helper to get active theme values
   const activeTheme = THEMES[currentTheme];
 
   return (
     <div 
       className="transition-colors duration-1000 min-h-screen w-full flex flex-col md:p-10"
       style={{ 
-        backgroundColor: '#24292e', // Outer border color remains stable
-        '--selection-bg': activeTheme.selection // Custom variable for selection
+        backgroundColor: '#24292e', 
+        '--selection-bg': activeTheme.selection 
       }}
     >
-      {/* Dynamic Style Tag for Global Selection Color */}
       <style>{`
         ::selection {
           background-color: ${activeTheme.selection} !important;
@@ -61,10 +85,8 @@ function App() {
         style={{ backgroundColor: activeTheme.bg }}
       >
         
-        {/* 3. Pass activeTheme.primary to components to update their text/accents */}
         <Hero socials={data.socials} primaryColor={activeTheme.primary} />
         
-        {/* 4. Pass Theme controls to Projects so the Rubik's Cube can change the whole page */}
         <Projects 
           projects={data.projects} 
           currentTheme={currentTheme} 
@@ -92,4 +114,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;

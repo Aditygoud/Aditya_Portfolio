@@ -184,7 +184,7 @@ const Certificates = ({ currentTheme, THEMES }) => {
         )}
       </AnimatePresence>
 
-      <style jsx>{`
+      <style>{`
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }

@@ -162,7 +162,7 @@ const Hero = ({ socials, primaryColor }) => {
             style={{ borderColor: `${primaryColor}4D` }}
           >
             <img 
-              src="/Aditya.png" 
+              src="/Aditya_Portfolio/Aditya.png" 
               alt="Aditya Goud"
               className="w-full h-full object-cover object-top scale-110 transition-transform duration-500 group-hover:scale-105"
             />
