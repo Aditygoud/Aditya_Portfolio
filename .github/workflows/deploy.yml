@@ -1,3 +1,4 @@
+# Force update for deployment trigger
 name: Deploy to GitHub Pages
 
 on:
