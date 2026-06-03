@@ -182,7 +182,6 @@ const Experience = ({ currentTheme, THEMES }) => {
             ))}
           </div>
         </div>
-
       </motion.div>
     </section>
   );

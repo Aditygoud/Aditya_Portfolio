@@ -64,7 +64,7 @@ const Certificates = ({ currentTheme, THEMES }) => {
         </div>
       </div>
       
-      {/* INFINITE CIRCULAR SCROLL CONTAINER */}
+      {/* INFINITE CIRCULAR SCROLL CONTAINER */}   
       <div className="relative flex overflow-hidden">
         <motion.div 
           className="flex gap-8 whitespace-nowrap"

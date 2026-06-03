@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 
 // FEATURE ADDED: Receiving global theme props from App.jsx
+// eslint-disable-next-line no-unused-vars
 const Projects = ({ projects, activeFilter, currentTheme, setCurrentTheme, THEMES }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -40,7 +42,7 @@ const Projects = ({ projects, activeFilter, currentTheme, setCurrentTheme, THEME
         "Automated attendance logging with timestamping",
         "Seamless integration with existing HR databases"
       ]
-    },
+    }, 
     {
       id: 3,
       title: "Real-Time Sync Chat Engine",
@@ -87,11 +89,14 @@ const Projects = ({ projects, activeFilter, currentTheme, setCurrentTheme, THEME
     if (isPaused) return;
     const timer = setInterval(() => handleNext(), 3000);
     return () => clearInterval(timer);
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, isPaused]);
 
   const handleNext = () => setCurrentIndex((prev) => (prev + 1) % projectData.length);
   const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + projectData.length) % projectData.length);
 
+  // eslint-disable-next-line no-unused-vars
   const handleInteractionStart = (e) => {
     const now = Date.now();
     const DOUBLE_TAP_DELAY = 300;
@@ -160,19 +165,19 @@ const Projects = ({ projects, activeFilter, currentTheme, setCurrentTheme, THEME
           width: 100%; height: 100%; border-radius: 4px; 
           box-shadow: inset -2px -2px 5px rgba(0,0,0,0.4), inset 2px 2px 5px rgba(255,255,255,0.2);
         }
-        .front   { transform: translateZ(60px); }
+        .front    { transform: translateZ(60px); }
         .back    { transform: rotateY(180deg) translateZ(60px); }
-        .right   { transform: rotateY(90deg) translateZ(60px); }
+        .right  { transform: rotateY(90deg) translateZ(60px); }
         .left    { transform: rotateY(-90deg) translateZ(60px); }
-        .top     { transform: rotateX(90deg) translateZ(60px); }
+        .top    { transform: rotateX(90deg) translateZ(60px); }
         .bottom { transform: rotateX(-90deg) translateZ(60px); }
         
         .s-green  { background: #15803d; } 
         .s-orange { background: #ea580c; } 
-        .s-blue   { background: #1d4ed8; } 
+        .s-blue  { background: #1d4ed8; } 
         .s-red    { background: #b91c1c; } 
         .s-yellow { background: #eab308; } 
-        .s-cyan   { background: #0891b2; } 
+        .s-cyan  { background: #0891b2; } 
 
         @keyframes complexRotate {
           0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
@@ -248,7 +253,7 @@ const Projects = ({ projects, activeFilter, currentTheme, setCurrentTheme, THEME
                     ))}
                   </ul>
                 </div>
-              )}
+              )}  
 
               <div className="flex flex-wrap gap-3 pt-4">
                 {projectData[currentIndex].tech.map((t) => (
@@ -285,8 +290,14 @@ const Projects = ({ projects, activeFilter, currentTheme, setCurrentTheme, THEME
                     <div className="cube-face bottom">{Array(9).fill(0).map((_, i)=><div key={i} className="sticker s-cyan"></div>)}</div>
                   </div>
                 </div>
+                <p
+                  className="absolute -bottom-12 text-xs md:text-sm font-bold uppercase tracking-[0.2em] animate-pulse"
+                  style={{ color: activeTheme.primary }}
+                >
+                  Double Tap On Me
+                </p>
                 <div className="absolute inset-0 blur-[100px] rounded-full transition-colors duration-1000"
-                     style={{ backgroundColor: activeTheme.glow }}></div>
+                     style={{ backgroundColor: activeTheme.glow || `${activeTheme.primary}40` }}></div>
               </motion.div>
             </div>
           </motion.div>

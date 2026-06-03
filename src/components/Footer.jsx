@@ -1,8 +1,11 @@
 import * as Lucide from 'lucide-react';
 import { useState, useEffect } from 'react';
+
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 
 // FEATURE ADDED: Receiving global theme props from App.jsx
+// eslint-disable-next-line no-unused-vars
 const Footer = ({ socials, currentTheme, THEMES }) => {
   const [isGameOpen, setIsGameOpen] = useState(false);
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -17,7 +20,14 @@ const Footer = ({ socials, currentTheme, THEMES }) => {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 1. Try to find the hero section element block explicitly
+    const topElement = document.getElementById('hero-top');
+    if (topElement) {
+      topElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // 2. Fallback to standard window scrolling if layout wrapper changes
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const calculateWinner = (squares) => {
@@ -82,6 +92,7 @@ const Footer = ({ socials, currentTheme, THEMES }) => {
       const timer = setTimeout(aiMove, 500);
       return () => clearTimeout(timer);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isXNext]);
 
   const handleSquareClick = (i, isAi = false) => {
@@ -100,7 +111,7 @@ const Footer = ({ socials, currentTheme, THEMES }) => {
 
   return (
     <footer 
-      className="transition-all duration-1000 py-16 md:py-24 px-6 md:px-20 text-black relative"
+      className="transition-all duration-1000 py-16 md:py-24 px-6 md:px-20 text-black relative animate-fade-in"
       style={{ backgroundColor: activeTheme.primary }}
     >
       <div className="max-w-4xl mx-auto text-center">
@@ -111,13 +122,13 @@ const Footer = ({ socials, currentTheme, THEMES }) => {
           SOMETHING <span className="underline decoration-black/20 decoration-8 underline-offset-[-5px]">INTELLECTUAL.</span>
         </h2>
 
-        {/* THE SUBTEXT */}
+         {/* THE SUBTEXT */}
        <p className="text-black/90 font-bold text-lg md:text-2xl mb-12 md:mb-16 max-w-sm md:max-w-2xl mx-auto leading-snug tracking-tight">
           Available for <span className="bg-black px-3 py-1 rounded-sm mx-1" style={{ color: activeTheme.primary }}>freelance AI solutions</span> <br className="hidden md:block" />
           and full-stack web development projects.
         </p>
 
-        {/* STATUS INDICATOR */}
+         {/* STATUS INDICATOR */}
         <div className="flex justify-center items-center gap-3 opacity-60 mb-10">
           <span className="relative flex h-2.5 w-2.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-40"></span>
@@ -173,14 +184,17 @@ const Footer = ({ socials, currentTheme, THEMES }) => {
 
         <div className="flex flex-col md:flex-row items-center justify-between pt-10 border-t border-black/20 gap-6 md:gap-0 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]">
           <p className="order-2 md:order-1 text-black/60">AI & DATA SCIENCE</p>
-          <button onClick={scrollToTop} className="order-1 md:order-2 flex items-center gap-2 hover:scale-110 transition-transform cursor-pointer bg-black/10 px-4 py-2 rounded-full md:bg-transparent md:p-0">
+          <button 
+            onClick={scrollToTop} 
+            className="order-1 md:order-2 flex items-center gap-2 hover:scale-110 transition-transform cursor-pointer bg-black/10 px-4 py-2 rounded-full md:bg-transparent md:p-0 font-black"
+          >
             BACK TO TOP <Icon name="ArrowUp" size={12} />
           </button>
           <p className="order-3 text-black/60">NASHIK, INDIA</p>
         </div>
       </div>
 
-      {/* GAME MODAL */}
+      {/* GAME MODAL */} 
       <AnimatePresence>
         {isGameOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-6 backdrop-blur-md">
@@ -189,7 +203,7 @@ const Footer = ({ socials, currentTheme, THEMES }) => {
               animate={{ scale: 1, y: 0 }} 
               exit={{ scale: 0.5, y: 100 }} 
               className="bg-[#111111] border border-white/10 p-8 rounded-3xl max-w-sm w-full"
-              style={{ boxShadow: `0 0 50px ${activeTheme.glow}` }}
+              style={{ boxShadow: `0 0 50px ${activeTheme.primary}40` }} // Safe fallback for shadow glow using primary theme hex color
             >
               <div className="flex justify-between items-center mb-8">
                 <h3 className="font-black uppercase tracking-widest text-xs" style={{ color: activeTheme.primary }}>AI Tic-Tac-Toe</h3>

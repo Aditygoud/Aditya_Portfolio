@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from 'react'
 // axios is no longer needed since we are using local data
 import Hero from './components/Hero.jsx'
@@ -41,19 +42,15 @@ const profileData = {
         }
     ],
     socials: {
-        linkedin: "https://www.linkedin.com/in/aditya-goud-1a1444277/",
+        linkedin: "https://www.linkedin.com/in/aditya-goud-1a1444277/ ",
         github: "https://github.com/Aditygoud"
     }
 };
 
 function App() {
-  const [data, setData] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [data, setData] = useState(profileData);
   const [currentTheme, setCurrentTheme] = useState('default');
-
-  useEffect(() => {
-    // Directly set the data from our local object
-    setData(profileData);
-  }, []);
 
   if (!data) return (
     <div className="bg-[#111111] h-screen w-full flex items-center justify-center text-[#a2df0c] font-mono p-4 text-center">
@@ -65,53 +62,61 @@ function App() {
 
   const activeTheme = THEMES[currentTheme];
 
-  return (
-    <div 
-      className="transition-colors duration-1000 min-h-screen w-full flex flex-col md:p-10"
-      style={{ 
-        backgroundColor: '#24292e', 
-        '--selection-bg': activeTheme.selection 
-      }}
+ return (
+  <div
+    className="transition-colors duration-1000 min-h-screen w-full flex flex-col overflow-x-hidden"
+    style={{
+      backgroundColor: '#24292e',
+      '--selection-bg': activeTheme.selection
+    }}
+  >
+    <style>{`
+      ::selection {
+        background-color: ${activeTheme.selection} !important;
+        color: black !important;
+      }
+
+      html, body, #root {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+    `}</style>
+
+    <div
+      className="w-full min-h-screen shadow-2xl overflow-hidden border border-white/5 flex flex-col transition-colors duration-1000"
+      style={{ backgroundColor: activeTheme.bg }}
     >
-      <style>{`
-        ::selection {
-          background-color: ${activeTheme.selection} !important;
-          color: black !important;
-        }
-      `}</style>
-      
-      <div 
-        className="grow w-full max-w-7xl mx-auto shadow-2xl rounded-none md:rounded-[40px] overflow-hidden border border-white/5 flex flex-col transition-colors duration-1000"
-        style={{ backgroundColor: activeTheme.bg }}
-      >
-        
-        <Hero socials={data.socials} primaryColor={activeTheme.primary} />
-        
-        <Projects 
-          projects={data.projects} 
-          currentTheme={currentTheme} 
-          setCurrentTheme={setCurrentTheme} 
-          THEMES={THEMES} 
-        />
-        
-       <Experience 
-          currentTheme={currentTheme} 
-          THEMES={THEMES} 
-        />
 
-       <Certificates 
-          currentTheme={currentTheme} 
-          THEMES={THEMES} 
-        />
-        
-        <Footer
-          currentTheme={currentTheme} 
-          THEMES={THEMES} 
-        />
+      <Hero socials={data.socials} primaryColor={activeTheme.primary} />
 
-      </div>
+      <Projects
+        projects={data.projects}
+        currentTheme={currentTheme}
+        setCurrentTheme={setCurrentTheme}
+        THEMES={THEMES}
+      />
+
+      <Experience
+        currentTheme={currentTheme}
+        THEMES={THEMES}
+      />
+
+      <Certificates
+        currentTheme={currentTheme}
+        THEMES={THEMES}
+      />
+
+      <Footer
+        currentTheme={currentTheme}
+        THEMES={THEMES}
+      />
+
     </div>
-  );
+  </div>
+);
 }
 
 export default App;
